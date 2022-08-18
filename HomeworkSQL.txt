@@ -1,0 +1,8 @@
+NOTE: Written up in SQLite. Remember to mention this!!!
+
+SELECT p.product_id, p.name FROM product p join (
+SELECT product_id,SUM(quantity) AS total FROM orders GROUP BY product_id
+) o ON o.product_id = p.product_id 
+WHERE o.total < 10
+AND p.available_from < date('now','-1 month')
+AND p.available_from > date('now','-1 year');
